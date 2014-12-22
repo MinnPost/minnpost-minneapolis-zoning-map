@@ -15,6 +15,42 @@ body .node-unpublished {
     padding-top: 3em;
   }
 
+  .map {
+    height: 40em;
+  }
+
+  .legend-container {
+
+    .component-label {
+      margin-bottom: 0;
+    }
+
+    .general-provisions {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+
+    ul, li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      margin-bottom: 0.75em;
+      line-height: 1.35em;
+
+      padding-left: 2.25em;
+      text-indent: -2.25em;
+    }
+
+    .legend-swatch {
+      padding: 0.01em 0.4em;
+      color: #FFFFFF;
+    }
+
+  }
+
 
   // Default responsive points
   // $responsive-points: (

@@ -10,7 +10,8 @@ You can see this project in action at *[published story link goes here]()*.
 
 ## Data
 
-*Describe the data sources here.  Use links and URLs to show where the data came from.  Put small sized originals or modified data sources in the ```data/original``` folder and ensure to update the `.gitignore` file*
+* Primary Zoning boundaries from [Minneapolis Data Portal](http://opendata.minneapolismn.gov/datasets/eac15cee3f2d4ec4887e1f8995955ef1_0).
+* [Zoning descriptions](http://www.minneapolismn.gov/zoning/zoning_zoning-district-descriptions) from Minneapolis Planning Division.
 
 ## Development and running locally
 

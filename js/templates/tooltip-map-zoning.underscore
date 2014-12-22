@@ -1,0 +1,4 @@
+<div>
+  <div class="component-label"><%= data.ZONE_CODE %> district</div>
+  <div><%= zMap[data.ZONE_CODE.replace(/-[0-9]+/, '')].type %></div>
+</div>

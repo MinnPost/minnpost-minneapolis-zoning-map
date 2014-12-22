@@ -3,32 +3,43 @@
 
   <div class="content-container">
 
-    <h3>Minnpost Minneapolis Zoning Map</h3>
+    <div class="component-label">Minneapolis primary zoning districts</div>
+    <div class="caption">Minneapolis primary zoning districts colored by type of district.  Data up to date as of December 11, 2014.  Minneapolis overlay zoning districts not included.  Click or tap on the legend to see the specific Minneapolis code for each zoning district.</div>
 
-    <div class="loading-block"></div>
+    <div class="map" id="mpls-zoning-map"></div>
 
-    <p>Welcome to your new MinnPost application, built from the MinnPost Templating system.  Make sure to use the <a href="http://code.minnpost.com/minnpost-styles/">MinnPost Style Guide</a> for all your styling needs.</p>
-
-    
-    
-
-    
-    <div class="component-label">Map example</div>
-    <div class="caption">Here is an awesome, concise caption.</div>
-    <div class="map" id="example-markers-features-map"></div>
-    
-
-    
-    
+    <div class="legend-container row small">
+      {{#each zoneTypes:zi}}
+        <div class="column-medium-20">
+          <div class="component-label">{{ zi.replace('Districts', '') }}</div>
+          <a class="general-provisions" href="{{ muniCodeTemplate.replace('[[[NODE]]]', this[0].gen_node )}}" target="_blank">General provisions</a>
+          <ul>
+            {{#each . }}
+              <li>
+                <a
+                  class="legend-swatch"
+                  style="background-color: {{ zoneColors[id] }};"
+                  href="{{ muniCodeTemplate.replace('[[[NODE]]]', node )}}"
+                  target="_blank"
+                  title="Specific provisions for distrct">
+                  {{ id }}
+                </a>
+                {{ type.replace('District', '') }}
+              </li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/each}}
+    </div>
 
   </div>
 
   <div class="footnote-container">
     <div class="footnote">
+      <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.</p>
+
       <p>Some code, techniques, and data on <a href="https://github.com/minnpost/minnpost-minneapolis-zoning-map" target="_blank">Github</a>.</p>
-      
-        <p>Some map data © OpenStreetMap contributors; licensed under the <a href="http://www.openstreetmap.org/copyright" target="_blank">Open Data Commons Open Database License</a>.  Some map design © MapBox; licensed according to the <a href="http://mapbox.com/tos/" target="_blank">MapBox Terms of Service</a>.  Location geocoding provided by <a href="http://www.mapquest.com/" target="_blank">Mapquest</a> and is not guaranteed to be accurate.</p>
-      
+
     </div>
   </div>
 </div>
