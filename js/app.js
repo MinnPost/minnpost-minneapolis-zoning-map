@@ -249,7 +249,7 @@ require([
         minZoom: 9,
         maxZoom: 16
       });
-      this.mapZoning.setView(mpMaps.minneapolisPoint);
+      this.mapZoning.setView(mpMaps.minneapolisPoint, 13);
       this.mapZoning.removeControl(this.mapZoning.attributionControl);
 
       // Override the template function in Mapbox's grid control because
