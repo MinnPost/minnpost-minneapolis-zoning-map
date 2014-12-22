@@ -80,24 +80,6 @@ require([
           node: 'MICOOR_TIT20ZOCO_CH546REDI_ARTIXR6MUMIDI',
           type: 'Multiple-family District (high density)'
         },
-        OR1: {
-          gen_type: 'Office Residence Districts',
-          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
-          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIIORNEOFREDI',
-          type: 'Neighborhood Office Residence District'
-        },
-        OR2: {
-          gen_type: 'Office Residence Districts',
-          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
-          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIIIORHIDEOFREDI',
-          type: 'High Density Office Residence District'
-        },
-        OR3: {
-          gen_type: 'Office Residence Districts',
-          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
-          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIVORINOFREDI',
-          type: 'Institutional Office Residence District'
-        },
         C1: {
           gen_type: 'Commercial Districts',
           gen_node: 'MICOOR_TIT20ZOCO_CH548CODI_ARTIGEPR',
@@ -152,6 +134,24 @@ require([
           node: 'MICOOR_TIT20ZOCO_CH549DODI_ARTVIIIB4DONEDI',
           type: 'Downtown Neighborhood District'
         },
+        OR1: {
+          gen_type: 'Office Residence Districts',
+          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
+          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIIORNEOFREDI',
+          type: 'Neighborhood Office Residence District'
+        },
+        OR2: {
+          gen_type: 'Office Residence Districts',
+          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
+          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIIIORHIDEOFREDI',
+          type: 'High Density Office Residence District'
+        },
+        OR3: {
+          gen_type: 'Office Residence Districts',
+          gen_node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIGEPR',
+          node: 'MICOOR_TIT20ZOCO_CH547OFREDI_ARTIVORINOFREDI',
+          type: 'Institutional Office Residence District'
+        },
         I1: {
           gen_type: 'Industrial Districts',
           gen_node: 'MICOOR_TIT20ZOCO_CH550INDI_ARTIGEPR',
@@ -188,13 +188,13 @@ require([
         C3A: 'rgb(251,106,74)',
         C3S: 'rgb(222,45,38)',
         C4: 'rgb(165,15,21)',
-        I1: 'rgb(203,201,226)',
-        I2: 'rgb(158,154,200)',
-        I3: 'rgb(106,81,163)',
-        B4: 'rgb(253,190,133)',
-        B4S: 'rgb(253,141,60)',
-        B4C: 'rgb(230,85,13)',
-        B4N: 'rgb(166,54,3)'
+        I1: 'rgb(204,204,204)',
+        I2: 'rgb(150,150,150)',
+        I3: 'rgb(82,82,82)',
+        B4: 'rgb(203,201,226)',
+        B4S: 'rgb(158,154,200)',
+        B4C: 'rgb(117,107,177)',
+        B4N: 'rgb(84,39,143)'
       }
     },
 

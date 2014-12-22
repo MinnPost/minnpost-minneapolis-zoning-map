@@ -38,13 +38,13 @@ Map {
 #zoning[ZONE_CODE='C4'] { polygon-fill: @Reds-q5-6; }
 
 // Industrial
-#zoning[ZONE_CODE='I1'] { polygon-fill: @Purples-q1-4; }
-#zoning[ZONE_CODE='I2'] { polygon-fill: @Purples-q2-4; }
-#zoning[ZONE_CODE='I3'] { polygon-fill: @Purples-q3-4; }
+#zoning[ZONE_CODE='I1'] { polygon-fill: @Greys-q1-4; }
+#zoning[ZONE_CODE='I2'] { polygon-fill: @Greys-q2-4; }
+#zoning[ZONE_CODE='I3'] { polygon-fill: @Greys-q3-4; }
 
 // Downtown
-#zoning[ZONE_CODE=~'B4[-]*.*'] { polygon-fill: @Oranges-q1-5; }
-#zoning[ZONE_CODE=~'B4S[-]*.*'] { polygon-fill: @Oranges-q2-5; }
-#zoning[ZONE_CODE=~'B4C[-]*.*'] { polygon-fill: @Oranges-q3-5; }
-#zoning[ZONE_CODE=~'B4N[-]*.*'] { polygon-fill: @Oranges-q4-5; }
+#zoning[ZONE_CODE=~'B4[-]*.*'] { polygon-fill: @Purples-q1-5; }
+#zoning[ZONE_CODE=~'B4S[-]*.*'] { polygon-fill: @Purples-q2-5; }
+#zoning[ZONE_CODE=~'B4C[-]*.*'] { polygon-fill: @Purples-q3-5; }
+#zoning[ZONE_CODE=~'B4N[-]*.*'] { polygon-fill: @Purples-q4-5; }
 
