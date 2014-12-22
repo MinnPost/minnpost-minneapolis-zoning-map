@@ -1,0 +1,60 @@
+{
+  "bounds": [
+    -93.3416,
+    44.8851,
+    -93.185,
+    45.0582
+  ],
+  "center": [
+    -93.265,
+    44.9592,
+    12
+  ],
+  "format": "png8",
+  "interactivity": {
+    "layer": "zoning",
+    "template_teaser": "FID: {{{FID}}} <br>\nZone: {{{ZONE_CODE}}} <br>\nRule {{{RuleID}}} ({{{RuleI_DESC}}})",
+    "fields": [
+      "FID",
+      "ZONE_CODE",
+      "RuleID",
+      "RuleI_DESC"
+    ]
+  },
+  "minzoom": 7,
+  "maxzoom": 16,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "colorbrewer.mss",
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "geometry": "polygon",
+      "extent": [
+        -93.329056,
+        44.890621,
+        -93.194329,
+        45.051247
+      ],
+      "id": "zoning",
+      "class": "",
+      "Datasource": {
+        "file": "layers/minneapolis-zoning.geo.json",
+        "layer": "OGRGeoJSON"
+      },
+      "layer": null,
+      "srs-name": "autodetect",
+      "srs": "",
+      "advanced": {},
+      "name": "zoning"
+    }
+  ],
+  "scale": 1,
+  "metatile": 2,
+  "name": "Minneapolis primary zoning areas",
+  "description": "",
+  "attribution": "",
+  "legend": "",
+  "version": "0.0.1"
+}
