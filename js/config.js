@@ -13,22 +13,20 @@ require.config({
     }
   },
   shim: {
-    
-    
-    
     // Mapbox does not support RequireJS but it does include libraries
     // that do which is annoying
     'mapbox': {
       exports: 'L'
     },
-    
     'lazyload': {
       exports: 'LazyLoad'
+    },
+    'leaflet-fullscreen': {
+      deps: ['leaflet', 'mapbox']
     }
   },
   baseUrl: 'js',
   paths: {
-    
     'requirejs': '../bower_components/requirejs/require',
     'almond': '../bower_components/almond/almond',
     'text': '../bower_components/text/text',
@@ -40,12 +38,11 @@ require.config({
     'ractive-backbone': '../bower_components/ractive-backbone/ractive-adaptors-backbone',
     'ractive-events-tap': '../bower_components/ractive-events-tap/ractive-events-tap',
     'mapbox': '../bower_components/mapbox.js/mapbox.uncompressed',
+    'leaflet-fullscreen': '//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min',
     'mpConfig': '../bower_components/minnpost-styles/dist/minnpost-styles.config',
     'mpFormatters': '../bower_components/minnpost-styles/dist/minnpost-styles.formatters',
     'mpMaps': '../bower_components/minnpost-styles/dist/minnpost-styles.maps',
-    
     'leaflet': 'build/mapbox-leaflet-shim',
-    
     'jquery-noconflict': 'build/jquery-noconflict'
   }
 });

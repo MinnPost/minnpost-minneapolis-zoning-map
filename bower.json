@@ -25,7 +25,8 @@
     "jquery": "~1.11.1",
     "backbone": "~1.1.2",
     "rgrove-lazyload": "*",
-    "minnpost-styles": "master"
+    "minnpost-styles": "master",
+    "Leaflet.fullscreen": "https://github.com/Leaflet/Leaflet.fullscreen.git#0.0.4"
   },
   "devDependencies": {
     "qunit": "~1.15.0"
@@ -110,6 +111,16 @@
         "mapbox.js/images"
       ],
       "returns": "L"
+    },
+    "Leaflet.fullscreen": {
+      "rname": "leaflet-fullscreen",
+      "js": [
+        "//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min"
+      ],
+      "css": [
+        "//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css"
+      ],
+      "returns": "LeafletFullscreen"
     },
     "minnpost-styles": {
       "rname": "mpStyles",

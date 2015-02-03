@@ -9,13 +9,13 @@
 require([
   'jquery', 'underscore', 'backbone', 'lazyload',
   'ractive', 'ractive-backbone', 'ractive-events-tap',
-  'mapbox', 'mpConfig', 'mpFormatters', 'mpMaps',
+  'mapbox', 'leaflet-fullscreen', 'mpConfig', 'mpFormatters', 'mpMaps',
   'base',
   'text!templates/application.mustache',
   'text!templates/tooltip-map-zoning.underscore'
 ], function(
   $, _, Backbone, Lazyload, Ractive, RactiveBackbone, RactiveEventsTap,
-  L, mpConfig, mpFormatters, mpMaps,
+  L, LeafletFullscreen, mpConfig, mpFormatters, mpMaps,
   Base,
   tApplication, tTooltipMapZoning
   ) {
@@ -247,7 +247,8 @@ require([
         scrollWheelZoom: false,
         trackResize: true,
         minZoom: 9,
-        maxZoom: 16
+        maxZoom: 16,
+        fullscreenControl: true
       });
       this.mapZoning.setView(mpMaps.minneapolisPoint, 13);
       this.mapZoning.removeControl(this.mapZoning.attributionControl);
