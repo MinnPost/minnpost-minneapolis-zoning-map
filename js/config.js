@@ -38,7 +38,7 @@ require.config({
     'ractive-backbone': '../bower_components/ractive-backbone/ractive-adaptors-backbone',
     'ractive-events-tap': '../bower_components/ractive-events-tap/ractive-events-tap',
     'mapbox': '../bower_components/mapbox.js/mapbox.uncompressed',
-    'leaflet-fullscreen': '//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min',
+    'leaflet-fullscreen': '../bower_components/Leaflet.fullscreen/dist/Leaflet.fullscreen',
     'mpConfig': '../bower_components/minnpost-styles/dist/minnpost-styles.config',
     'mpFormatters': '../bower_components/minnpost-styles/dist/minnpost-styles.formatters',
     'mpMaps': '../bower_components/minnpost-styles/dist/minnpost-styles.maps',

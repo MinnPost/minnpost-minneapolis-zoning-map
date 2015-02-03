@@ -43171,6 +43171,157 @@ define("mapbox", (function (global) {
 }(this)));
 
 /**
+ * A hack to have leaflet as a module since mapbox does not really
+ * support require.  Only needed if using the Mapbox.js library.
+ */
+define('leaflet',['mapbox'], function(mapbox) {
+  return window.L;
+});
+
+L.Control.Fullscreen = L.Control.extend({
+    options: {
+        position: 'topleft',
+        title: {
+            'false': 'View Fullscreen',
+            'true': 'Exit Fullscreen'
+        }
+    },
+
+    onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'leaflet-control-fullscreen leaflet-bar leaflet-control');
+
+        this.link = L.DomUtil.create('a', 'leaflet-control-fullscreen-button leaflet-bar-part', container);
+        this.link.href = '#';
+
+        this._map = map;
+        this._map.on('fullscreenchange', this._toggleTitle, this);
+        this._toggleTitle();
+
+        L.DomEvent.on(this.link, 'click', this._click, this);
+
+        return container;
+    },
+
+    _click: function (e) {
+        L.DomEvent.stopPropagation(e);
+        L.DomEvent.preventDefault(e);
+        this._map.toggleFullscreen();
+    },
+
+    _toggleTitle: function() {
+        this.link.title = this.options.title[this._map.isFullscreen()];
+    }
+});
+
+L.Map.include({
+    isFullscreen: function () {
+        return this._isFullscreen || false;
+    },
+
+    toggleFullscreen: function () {
+        var container = this.getContainer();
+        if (this.isFullscreen()) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else {
+                L.DomUtil.removeClass(container, 'leaflet-pseudo-fullscreen');
+                this._setFullscreen(false);
+                this.invalidateSize();
+                this.fire('fullscreenchange');
+            }
+        } else {
+            if (container.requestFullscreen) {
+                container.requestFullscreen();
+            } else if (container.mozRequestFullScreen) {
+                container.mozRequestFullScreen();
+            } else if (container.webkitRequestFullscreen) {
+                container.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            } else if (container.msRequestFullscreen) {
+                container.msRequestFullscreen();
+            } else {
+                L.DomUtil.addClass(container, 'leaflet-pseudo-fullscreen');
+                this._setFullscreen(true);
+                this.invalidateSize();
+                this.fire('fullscreenchange');
+            }
+        }
+    },
+
+    _setFullscreen: function(fullscreen) {
+        this._isFullscreen = fullscreen;
+        var container = this.getContainer();
+        if (fullscreen) {
+            L.DomUtil.addClass(container, 'leaflet-fullscreen-on');
+        } else {
+            L.DomUtil.removeClass(container, 'leaflet-fullscreen-on');
+        }
+    },
+
+    _onFullscreenChange: function (e) {
+        var fullscreenElement =
+            document.fullscreenElement ||
+            document.mozFullScreenElement ||
+            document.webkitFullscreenElement ||
+            document.msFullscreenElement;
+
+        if (fullscreenElement === this.getContainer() && !this._isFullscreen) {
+            this._setFullscreen(true);
+            this.fire('fullscreenchange');
+        } else if (fullscreenElement !== this.getContainer() && this._isFullscreen) {
+            this._setFullscreen(false);
+            this.fire('fullscreenchange');
+        }
+    }
+});
+
+L.Map.mergeOptions({
+    fullscreenControl: false
+});
+
+L.Map.addInitHook(function () {
+    if (this.options.fullscreenControl) {
+        this.fullscreenControl = new L.Control.Fullscreen();
+        this.addControl(this.fullscreenControl);
+    }
+
+    var fullscreenchange;
+
+    if ('onfullscreenchange' in document) {
+        fullscreenchange = 'fullscreenchange';
+    } else if ('onmozfullscreenchange' in document) {
+        fullscreenchange = 'mozfullscreenchange';
+    } else if ('onwebkitfullscreenchange' in document) {
+        fullscreenchange = 'webkitfullscreenchange';
+    } else if ('onmsfullscreenchange' in document) {
+        fullscreenchange = 'MSFullscreenChange';
+    }
+
+    if (fullscreenchange) {
+        var onFullscreenChange = L.bind(this._onFullscreenChange, this);
+
+        this.whenReady(function () {
+            L.DomEvent.on(document, fullscreenchange, onFullscreenChange);
+        });
+
+        this.on('unload', function () {
+            L.DomEvent.off(document, fullscreenchange, onFullscreenChange);
+        });
+    }
+});
+
+L.control.fullscreen = function (options) {
+    return new L.Control.Fullscreen(options);
+};
+
+define("leaflet-fullscreen", ["leaflet","mapbox"], function(){});
+
+/**
  * Gets config from SASS so that it can be refrenced on the front end.
  */
 
@@ -43588,14 +43739,6 @@ define("mapbox", (function (global) {
 
   return formatters;
 
-});
-
-/**
- * A hack to have leaflet as a module since mapbox does not really
- * support require.  Only needed if using the Mapbox.js library.
- */
-define('leaflet',['mapbox'], function(mapbox) {
-  return window.L;
 });
 
 /**
@@ -44124,7 +44267,7 @@ define('text',['module'], function (module) {
 });
 
 
-define('text!../bower.json',[],function () { return '{\n  "name": "minnpost-minneapolis-zoning-map",\n  "version": "0.0.0",\n  "main": "index.html",\n  "homepage": "https://github.com/minnpost/minnpost-minneapolis-zoning-map",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/minnpost/minnpost-minneapolis-zoning-map"\n  },\n  "bugs": "https://github.com/minnpost/minnpost-minneapolis-zoning-map/issues",\n  "license": "MIT",\n  "author": {\n    "name": "MinnPost",\n    "email": "data@minnpost.com"\n  },\n  "dependencies": {\n    "mapbox.js": "~1.6.4",\n    "ractive": "~0.5.6",\n    "ractive-events-tap": "~0.1.1",\n    "ractive-backbone": "~0.1.1",\n    "requirejs": "~2.1.15",\n    "almond": "~0.3.0",\n    "text": "~2.0.12",\n    "underscore": "~1.7.0",\n    "jquery": "~1.11.1",\n    "backbone": "~1.1.2",\n    "rgrove-lazyload": "*",\n    "minnpost-styles": "master"\n  },\n  "devDependencies": {\n    "qunit": "~1.15.0"\n  },\n  "dependencyMap": {\n    "requirejs": {\n      "rname": "requirejs",\n      "js": [\n        "requirejs/require"\n      ]\n    },\n    "almond": {\n      "rname": "almond",\n      "js": [\n        "almond/almond"\n      ]\n    },\n    "text": {\n      "rname": "text",\n      "js": [\n        "text/text"\n      ]\n    },\n    "jquery": {\n      "rname": "jquery",\n      "js": [\n        "jquery/dist/jquery"\n      ],\n      "returns": "$"\n    },\n    "underscore": {\n      "rname": "underscore",\n      "js": [\n        "underscore/underscore"\n      ],\n      "returns": "_"\n    },\n    "backbone": {\n      "rname": "backbone",\n      "js": [\n        "backbone/backbone"\n      ],\n      "returns": "Backbone"\n    },\n    "rgrove-lazyload": {\n      "rname": "lazyload",\n      "js": [\n        "rgrove-lazyload/lazyload"\n      ],\n      "returns": "Lazyload"\n    },\n    "ractive": {\n      "rname": "ractive",\n      "js": [\n        "ractive/ractive-legacy"\n      ],\n      "returns": "Ractive"\n    },\n    "ractive-backbone": {\n      "rname": "ractive-backbone",\n      "js": [\n        "ractive-backbone/ractive-adaptors-backbone"\n      ],\n      "returns": "RactiveBackbone"\n    },\n    "ractive-events-tap": {\n      "rname": "ractive-events-tap",\n      "js": [\n        "ractive-events-tap/ractive-events-tap"\n      ],\n      "returns": "RactiveEventsTap"\n    },\n    "mapbox.js": {\n      "rname": "mapbox",\n      "js": [\n        "mapbox.js/mapbox.uncompressed"\n      ],\n      "css": [\n        "mapbox.js/mapbox.uncompressed"\n      ],\n      "images": [\n        "mapbox.js/images"\n      ],\n      "returns": "L"\n    },\n    "minnpost-styles": {\n      "rname": "mpStyles",\n      "css": [\n        "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css",\n        "minnpost-styles/dist/minnpost-styles"\n      ],\n      "sass": [\n        "minnpost-styles/styles/main"\n      ]\n    },\n    "mpConfig": {\n      "rname": "mpConfig",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.config"\n      ],\n      "returns": "mpConfig"\n    },\n    "mpFormatters": {\n      "rname": "mpFormatters",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.formatters"\n      ],\n      "returns": "mpFormatters"\n    },\n    "mpMaps": {\n      "rname": "mpMaps",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.maps"\n      ],\n      "returns": "mpMaps"\n    }\n  },\n  "resolutions": {\n    "underscore": ">=1.5.0"\n  }\n}\n';});
+define('text!../bower.json',[],function () { return '{\n  "name": "minnpost-minneapolis-zoning-map",\n  "version": "0.0.0",\n  "main": "index.html",\n  "homepage": "https://github.com/minnpost/minnpost-minneapolis-zoning-map",\n  "repository": {\n    "type": "git",\n    "url": "https://github.com/minnpost/minnpost-minneapolis-zoning-map"\n  },\n  "bugs": "https://github.com/minnpost/minnpost-minneapolis-zoning-map/issues",\n  "license": "MIT",\n  "author": {\n    "name": "MinnPost",\n    "email": "data@minnpost.com"\n  },\n  "dependencies": {\n    "mapbox.js": "~1.6.4",\n    "ractive": "~0.5.6",\n    "ractive-events-tap": "~0.1.1",\n    "ractive-backbone": "~0.1.1",\n    "requirejs": "~2.1.15",\n    "almond": "~0.3.0",\n    "text": "~2.0.12",\n    "underscore": "~1.7.0",\n    "jquery": "~1.11.1",\n    "backbone": "~1.1.2",\n    "rgrove-lazyload": "*",\n    "minnpost-styles": "master",\n    "Leaflet.fullscreen": "https://github.com/Leaflet/Leaflet.fullscreen.git#0.0.4"\n  },\n  "devDependencies": {\n    "qunit": "~1.15.0"\n  },\n  "dependencyMap": {\n    "requirejs": {\n      "rname": "requirejs",\n      "js": [\n        "requirejs/require"\n      ]\n    },\n    "almond": {\n      "rname": "almond",\n      "js": [\n        "almond/almond"\n      ]\n    },\n    "text": {\n      "rname": "text",\n      "js": [\n        "text/text"\n      ]\n    },\n    "jquery": {\n      "rname": "jquery",\n      "js": [\n        "jquery/dist/jquery"\n      ],\n      "returns": "$"\n    },\n    "underscore": {\n      "rname": "underscore",\n      "js": [\n        "underscore/underscore"\n      ],\n      "returns": "_"\n    },\n    "backbone": {\n      "rname": "backbone",\n      "js": [\n        "backbone/backbone"\n      ],\n      "returns": "Backbone"\n    },\n    "rgrove-lazyload": {\n      "rname": "lazyload",\n      "js": [\n        "rgrove-lazyload/lazyload"\n      ],\n      "returns": "Lazyload"\n    },\n    "ractive": {\n      "rname": "ractive",\n      "js": [\n        "ractive/ractive-legacy"\n      ],\n      "returns": "Ractive"\n    },\n    "ractive-backbone": {\n      "rname": "ractive-backbone",\n      "js": [\n        "ractive-backbone/ractive-adaptors-backbone"\n      ],\n      "returns": "RactiveBackbone"\n    },\n    "ractive-events-tap": {\n      "rname": "ractive-events-tap",\n      "js": [\n        "ractive-events-tap/ractive-events-tap"\n      ],\n      "returns": "RactiveEventsTap"\n    },\n    "mapbox.js": {\n      "rname": "mapbox",\n      "js": [\n        "mapbox.js/mapbox.uncompressed"\n      ],\n      "css": [\n        "mapbox.js/mapbox.uncompressed"\n      ],\n      "images": [\n        "mapbox.js/images"\n      ],\n      "returns": "L"\n    },\n    "Leaflet.fullscreen": {\n      "rname": "leaflet-fullscreen",\n      "js": [\n        "Leaflet.fullscreen/dist/Leaflet.fullscreen"\n      ],\n      "css": [\n        "//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css"\n      ],\n      "returns": "LeafletFullscreen"\n    },\n    "minnpost-styles": {\n      "rname": "mpStyles",\n      "css": [\n        "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css",\n        "minnpost-styles/dist/minnpost-styles"\n      ],\n      "sass": [\n        "minnpost-styles/styles/main"\n      ]\n    },\n    "mpConfig": {\n      "rname": "mpConfig",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.config"\n      ],\n      "returns": "mpConfig"\n    },\n    "mpFormatters": {\n      "rname": "mpFormatters",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.formatters"\n      ],\n      "returns": "mpFormatters"\n    },\n    "mpMaps": {\n      "rname": "mpMaps",\n      "js": [\n        "minnpost-styles/dist/minnpost-styles.maps"\n      ],\n      "returns": "mpMaps"\n    }\n  },\n  "resolutions": {\n    "underscore": ">=1.5.0"\n  }\n}\n';});
 
 /**
  * Base class(es) for applications.
@@ -44383,13 +44526,13 @@ define('text!templates/tooltip-map-zoning.underscore',[],function () { return '<
 require([
   'jquery', 'underscore', 'backbone', 'lazyload',
   'ractive', 'ractive-backbone', 'ractive-events-tap',
-  'mapbox', 'mpConfig', 'mpFormatters', 'mpMaps',
+  'mapbox', 'leaflet-fullscreen', 'mpConfig', 'mpFormatters', 'mpMaps',
   'base',
   'text!templates/application.mustache',
   'text!templates/tooltip-map-zoning.underscore'
 ], function(
   $, _, Backbone, Lazyload, Ractive, RactiveBackbone, RactiveEventsTap,
-  L, mpConfig, mpFormatters, mpMaps,
+  L, LeafletFullscreen, mpConfig, mpFormatters, mpMaps,
   Base,
   tApplication, tTooltipMapZoning
   ) {
@@ -44621,7 +44764,8 @@ require([
         scrollWheelZoom: false,
         trackResize: true,
         minZoom: 9,
-        maxZoom: 16
+        maxZoom: 16,
+        fullscreenControl: true
       });
       this.mapZoning.setView(mpMaps.minneapolisPoint, 13);
       this.mapZoning.removeControl(this.mapZoning.attributionControl);

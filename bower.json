@@ -115,7 +115,7 @@
     "Leaflet.fullscreen": {
       "rname": "leaflet-fullscreen",
       "js": [
-        "//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min"
+        "Leaflet.fullscreen/dist/Leaflet.fullscreen"
       ],
       "css": [
         "//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css"
